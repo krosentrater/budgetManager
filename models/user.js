@@ -11,14 +11,20 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    memberSince: {
-        type: Date,
-        default: Date.now
+    email: {
+        type: String,
+        required: true,
+        unique: true,
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
+    income: {
+        type: Number,
+        default: 0,
     },
+    expenses: [{
+        description: String,
+        amount: Number,
+        date: Date,
+    }],
 });
 
 userSchema.pre('save', function(next){
