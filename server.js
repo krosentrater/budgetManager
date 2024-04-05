@@ -5,7 +5,6 @@ var { expressjwt: jwt } = require("express-jwt");
 const app = express();
 require('dotenv').config();
 
-// .gitignore needs to include .env files and /node_modules
 
 PORT = 3200;
 
@@ -16,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/BudgetManager');
 
 app.use('/auth', require('./routes/authRouter.js'));
 app.use('/api', jwt({ secret: process.env.SECRET, algorithms: ['HS256']}));
-app.use('/user', require('./routes/userRouter.js'));
+app.use('/api/user', require('./routes/userRouter.js'));
 
 app.use((err, req, res, next) => {
     if(err.name === "Unauthorized Error"){
