@@ -27,24 +27,28 @@ const userSchema = new Schema ({
     }],
 });
 
-userSchema.pre('save', function(next){
-    const user = this 
-    if (!user.isModified('password')) return next()
-    bcrypt.hash(user.password, 8, (err, hash) => {
-        if(err) return next(err)
-        user.password = hash
-        next()
-    });
+userSchema.pre('save', async function (next) {
+    const user = this;
+    if (!user.isModified('password')) return next();
+    try {
+        const hash = await bcrypt.hash(user.password, 8);
+        user.password = hash;
+        next();
+    } catch(err) {
+        next(err);
+    };
 });
 
-userSchema.methods.checkPassword = function(passwordAttempt, callback){
-    bcrypt.compare(passwordAttempt, this.password, (err, isMatch) =>{
-        if (err) return callback(err);
-        return callback(null, isMatch);
-    });
+userSchema.methods.checkPassword = async function (passwordAttempt) {
+    try {
+        const isMatch = await bcrypt.compare(passwordAttempt, this.password);
+        return isMatch;
+    } catch(err){
+        throw err;
+    };
 };
 
-userSchema.methods.withoutPassword = function(){
+userSchema.methods.withoutPassword = function() {
     const user = this.toObject();
     delete user.password;
     return user;

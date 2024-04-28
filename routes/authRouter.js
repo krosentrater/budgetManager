@@ -22,4 +22,29 @@ authRouter.post('/signup', async (req, res, next) => {
     }
 });
 
+//Login
+authRouter.post('/login', async (req, res, next) => {
+    const failedLogin = 'Username or Password is incorrect.';
+    try {
+        const user = await User.findOne({ username: req.body.username.toLowerCase() });
+        if (!user) {
+            res.status(401);
+            return next(new Error(failedLogin));
+        };
+
+        const isMatch = await user.checkPassword(req.body.password);
+        if (!isMatch) {
+            res.status(403);
+            return next(new Error(failedLogin));
+        };
+
+        const token = jwt.sign(user.withoutPassword(), process.env.SECRET);
+        return res.status(200).send({ token, user: user.withoutPassword() });
+    } catch (err){
+        res.status(500);
+        return next(err);
+    };
+});
+
+
 module.exports = authRouter;
