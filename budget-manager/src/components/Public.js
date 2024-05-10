@@ -1,46 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Budget from './public-components/Budget.js';
+import TotalExp from './public-components/TotalExp.js';
+import Remaining from './public-components/Remaining.js';
+import Expenses from './public-components/Expenses.js';
+import ExpenseForm from './public-components/ExpenseForm.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { AppProvider } from './public-components/context/AppContext.js';
 
-const Public = () => {
-  const [name, setName] = useState('');
-  const [cost, setCost] = useState('');
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission (e.g., add expense to state)
-    // You can use the 'name' and 'cost' values here
-  };
-
+function Public(){
   return (
-    <form onSubmit={onSubmit}>
-      <div className="row">
-        <div className="col-sm">
-          <label htmlFor="name">Name</label>
-          <input
-            required
-            type="text"
-            className="form-control"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+    <AppProvider>
+      <div className='container'>
+        <h1 className="mt-3">Free Budget Planner</h1>
+        <div className='row mt-3'>
+          <div className="col-sm">
+            <Budget />
+          </div>
+          <div className="col-sm">
+            <Remaining />
+          </div>
+          <div className="col-sm">
+            <TotalExp />
+          </div>
         </div>
-        <div className="col-sm">
-          <label htmlFor="cost">Cost</label>
-          <input
-            required
-            type="number"
-            className="form-control"
-            id="cost"
-            value={cost}
-            onChange={(e) => setCost(e.target.value)}
-          />
+        <h3 className="mt-3">Expenses</h3>
+        <div className="row mt-3">
+          <div className="col-sm">
+            <Expenses />
+          </div>
+        </div>
+        <h3 className="mt-3">Add Expense</h3>
+        <div className="row mt-3">
+          <div className="col-sm">
+            <ExpenseForm />
+          </div>
         </div>
       </div>
-      <button type="submit" className="btn btn-primary mt-3">
-        Add Expense
-      </button>
-    </form>
-  );
-};
+    </AppProvider>
+  )
+}
 
 export default Public;

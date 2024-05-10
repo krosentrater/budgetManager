@@ -6,7 +6,7 @@ function Navbar(){
     return (
         <div className="navbar-wrapper">
             <nav>
-                <ul>
+                <ul className="list-navbar">
                     <li className="nav-title">Budget Manager</li>
                     <li><a href="/">Home</a></li>
                     <li><a href="budget-creator">Create Budget</a></li>
