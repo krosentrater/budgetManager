@@ -13,7 +13,7 @@ function BudgetForm(){
         };
 
         dispatch({
-            type: "SET_BUDGET",
+            type: "EDIT_BUDGET",
             payload: parsedBudget,
         });
     };
@@ -23,7 +23,7 @@ function BudgetForm(){
             <form onSubmit = {onSubmit}>
                 <div className = 'row'>
                     <div className='col-sm'>
-                        <label htmlFor='budget'>Set Budget</label>
+                        <label htmlFor='budget'>Set Budget </label>
                         <input
                             required='required'
                             type='number'
