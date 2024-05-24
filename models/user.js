@@ -20,11 +20,6 @@ const userSchema = new Schema ({
         type: Number,
         default: 0,
     },
-    expenses: [{
-        description: String,
-        amount: Number,
-        date: Date,
-    }],
 });
 
 userSchema.pre('save', async function (next) {
